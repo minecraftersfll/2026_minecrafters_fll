@@ -1,0 +1,141 @@
+from hub import port
+import runloop
+import motor
+import motor_pair
+from hub import motion_sensor
+
+#C and D are the attachment motors and A and E are the wheel motors.
+
+motor_pair.pair(motor_pair.PAIR_1, port.A, port.E)
+
+async def moveFront(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 500, 500, acceleration=500)
+
+async def moveBack(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(-rotations*360), 500, 500, acceleration=500)
+
+async def turnLeft(degree):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, degree*2, -500, 800)
+
+async def turnRight(degree):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, degree*2, 100, -800)
+
+async def moveFrontAttachment(rotations):
+    await motor.run_for_degrees(port.D, int(rotations*360), 1050, acceleration=10000)
+
+async def moveBackAttachment(rotations):
+    await motor.run_for_degrees(port.C, int(rotations*360), 1050)
+
+async def moveAllAttachments(rotations):
+    motor.run_for_degrees(port.D, rotations*360, 1050)
+    await motor.run_for_degrees(port.C, rotations*360, 1050)
+
+async def moveFrontAndAttachmentTogether(drive_rotations, attachment_rotations):
+    motor.run_for_degrees(port.D, int(attachment_rotations * 360), 200)
+    await moveFrontSlow(drive_rotations)
+
+async def moveBackAndAttachmentTogether(drive_rotations, rotations):
+    motor.run_for_degrees(port.D, int(rotations*360), 1050, acceleration=10000)
+    await moveBackFast(drive_rotations)
+
+async def turnLeftAndMoveAttachmentTogether(drive_rotations, rotations):
+    motor.run_for_degrees(port.D, int(rotations*360), 1050, acceleration=10000)
+    await turnLeftSlow(drive_rotations)
+
+async def moveFrontSlow(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 100, 100, acceleration=100)
+
+async def moveBackFast(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(-rotations*360), 1500, 1500, acceleration=1500)
+
+async def turnLeftSlow(degree):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, degree*2, -500, 100, acceleration=100)
+
+async def turnLeftFast(degree):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, degree*2, -500, 2000)
+
+async def moveFrontFAST(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 2000, 1750, acceleration=1000)
+
+async def mission2(): 
+    await moveFront(0.56)
+    await turnRight(57)
+    await moveFront(1.1)
+    #await turnLeft(33)
+    await moveFrontAttachment(0.27)
+    await moveBack(1)
+    await turnRight(21) 
+    await moveFrontAttachment(-0.25)
+
+async def mission5():
+    await moveFront(1)
+    await turnRight(45)
+    await moveFront(0.5)
+    await turnLeft(45)
+    await moveFront(1.8)
+    await moveBackAndAttachmentTogether(0.2,0.3)
+    await moveFrontAttachment(-0.3)
+    await turnRight(10)
+    await moveFront(0.1)
+    await moveBackAndAttachmentTogether(0.2,1)
+    await moveFrontAttachment(-1)
+    await turnLeft(12)
+
+async def mission12():
+    await moveFront(1)
+    await moveFrontAttachment(0.15)
+    await turnRight(49)
+    await moveFront(0.7)
+    await turnRight(60)
+    await moveFrontAttachment(0.2)
+    await moveBack(0.2)
+    await moveFrontAttachment(-0.35)
+    await moveBack(0.2) 
+
+async def mission3():
+    await turnLeft(78)
+    await moveFrontAttachment(0.6)
+    await moveFront(0.25)
+    await turnLeft(100)
+    await moveFront(0.3)
+    await turnLeftFast(200)
+    await moveFrontAttachment(-0.6)
+    '''await turnLeft(78)
+    await moveFrontAttachment(0.6)
+    await moveFront(0.25)
+    await turnLeft(100)
+    await moveFrontFAST(1.25)
+    await turnLeftFast(200)
+    await moveFrontAttachment(-0.6)'''
+
+async def main():
+    await mission5()
+    await mission3()
+    
+    '''await moveFront(2.8)
+    await moveFrontAttachment(1)
+    #await moveFrontAndAttachmentTogether(0.5, 0.5)
+    await moveBack(2.6)
+    await moveFrontAttachment(-1)'''
+    '''motion_sensor.reset_yaw(0) #hold your breath otherwise
+
+    while True:
+        current_yaw = motion_sensor.tilt_angles()[0] * -0.1
+
+        # FIX 1: Lowered the multiplier from 1.5 to 0.5
+        steering = int((0 - current_yaw) * 1.)
+
+        steering = max(-100, min(100, steering))
+
+        motor_pair.move(motor_pair.PAIR_1, steering, velocity=300)
+        await runloop.sleep_ms(20)'''
+
+
+
+
+runloop.run(main())
+'''You have two options
+if someone has what you want:
+You can either turn it into 
+jealousy, or inspiration. 
+-Aasya Hota!!!'''

@@ -1,3 +1,4 @@
+
 from hub import port
 import runloop
 import motor
@@ -48,6 +49,10 @@ async def moveFrontSlow(rotations):
 async def moveBackFast(rotations):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(-rotations*360), 1500, 1500, acceleration=1500)
 
+async def moveBackSlow(rotations):
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(-rotations*360), 100, 100, acceleration=100)
+
+
 async def turnLeftSlow(degree):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, degree*2, -500, 100, acceleration=100)
 
@@ -59,12 +64,11 @@ async def moveFrontFAST(rotations):
 
 'working mission code'
 async def mission12_1():
-    await moveFront(2.35)
-    await turnRight(80)
+    await turnRight(100)
+    await moveFrontAttachment(-0.8)
     await moveFront(0.2)
-    await moveFrontAttachment(0.4)
-    #await moveFrontAttachment(-0.4)
-
+    await moveFrontAttachment(0.3)
+    
 async def mission12_2():
     await moveFront(0.1)
     await moveBack(1.2)
@@ -76,22 +80,34 @@ async def mission12_2():
     await moveFront(0.3)
     await moveBackAttachment(0.7)
 
-async def mission7():
-    await turnLeft(50)
-    await moveFront(0.3)
-    await turnLeft(20)
-    await moveBack(0.5)
-    #await moveFront(0.1)
 
 async def mission7_1():
     await moveFront(2.6)
-    await moveFrontAttachment(0.15)
-    await moveBack(0.2)
+    await turnRight(30)
+    await moveFront(0.2)
+    await turnLeft(30)
+    await moveBack(0.3)
+    await moveFront(0.1)
+
+async def mission11():
+    await moveBack(0.9)
+    await moveFrontAttachment(0.4)
+    await turnLeft(120)
+    await moveBack(0.3)
+    await moveFront(0.75)
+
+async def mission6():
+    await moveFront(0.26)
+    await turnLeft(90)
+    await moveBackSlow(0.4)
 
 
 async def main():
+    await mission7_1()
     await mission12_1()
-    await mission7()
+    await mission11()
+    #await moveFrontAttachment(-0.67)
+    await mission6()
 
 
-runloop.run(main())
+runloop.run(main()) 

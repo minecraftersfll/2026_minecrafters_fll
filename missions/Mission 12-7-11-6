@@ -68,7 +68,7 @@ async def mission12_1():
     await moveFrontAttachment(-0.8)
     await moveFront(0.2)
     await moveFrontAttachment(0.3)
-    
+
 async def mission12_2():
     await moveFront(0.1)
     await moveBack(1.2)
@@ -97,12 +97,13 @@ async def mission11():
     await moveFront(0.75)
 
 async def mission6():
-    await moveFront(0.26)
+    await moveFront(0.23)
     await turnLeft(90)
-    await moveBackSlow(0.4)
+    await moveBackSlow(0.3)
 
 
 async def main():
+    await moveBack(0.05)
     await mission7_1()
     await mission12_1()
     await mission11()
@@ -110,4 +111,4 @@ async def main():
     await mission6()
 
 
-runloop.run(main()) 
+runloop.run(main())

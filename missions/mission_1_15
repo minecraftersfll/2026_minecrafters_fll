@@ -46,9 +46,6 @@ async def turnLeftAndMoveAttachmentTogether(drive_rotations, rotations):
 async def moveFrontSlow(rotations):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 350, 350, acceleration=500)
 
-async def moveFrontSlower(rotations):
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 100, 100, acceleration=100)
-
 async def moveBackFast(rotations):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(-rotations*360), 1500, 1500, acceleration=1500)
 
@@ -76,17 +73,15 @@ async def mission_1():
     await moveBack(1)
 
 async def mission_15():
-    await moveFront(0.4)
-    await turnRight(80)
-    await moveFront(1.6)
-    await turnLeft(30)
-    await moveFrontSlower(0.25)
-    await moveFrontAttachment(0.1)
-    await moveBackSlow(0.3)
-    await turnRight(40)
-    await moveFront(1.5)
-    await turnRight(65)
-    await moveFront(1.5)
+    await moveFront(0.3)
+    await turnRight(75)
+    await moveFrontSlow(1.9)
+    await moveFrontAttachment(0.4)
+    await moveBack(0.5)
+    #await turnRight(40)
+    #await moveFront(1.4)
+    #await turnRight(65)
+    #await moveFront(0.4)
    # await moveBackAttachment(-0.6)
     #await moveBack(0.4)
     #await moveBackAttachment(0.6)

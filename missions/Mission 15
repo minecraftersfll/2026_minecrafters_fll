@@ -4,6 +4,8 @@ import runloop
 import motor
 import motor_pair
 from hub import motion_sensor
+import color
+import color_sensor
 
 #C and D are the attachment motors and A and E are the wheel motors.
 
@@ -44,7 +46,7 @@ async def turnLeftAndMoveAttachmentTogether(drive_rotations, rotations):
     await turnLeftSlow(drive_rotations)
 
 async def moveFrontSlow(rotations):
-    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 350, 350, acceleration=500)
+    await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 200, 200, acceleration=500)
 
 async def moveFrontSlower(rotations):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 100, 100, acceleration=100)
@@ -65,18 +67,31 @@ async def turnLeftFast(degree):
 async def moveFrontFAST(rotations):
     await motor_pair.move_tank_for_degrees(motor_pair.PAIR_1, int(rotations*360), 2000, 1750, acceleration=1000)
 
-async def mission15():
-    await moveFront(1)
+async def colorSensor():
+    motor_pair.move(motor_pair.PAIR_1, 0, velocity=100)
+    while True:
+        if color_sensor.color(port.B) == color.BLACK or color_sensor.color(port.F) == color.BLACK:
+            motor_pair.stop(motor_pair.PAIR_1)
+            break
+
+'''async def mission15():
+    await moveFront(0.75)
     await turnRight(80)
+    await moveFront(2.5) 
+    await colorSensor()
+    await moveBack(0.1)
+    await turnLeft(20)
+    await moveFrontSlower(0.35)
+    #await moveBackSlow(0.3)
+    await turnRight(35)
+    await moveFrontFAST(3.3)'''
+
+async def mission15_1():
     await moveFront(2.5)
-    await turnLeft(10)
-    await moveFrontSlower(0.3)
-    await moveBackSlow(0.3)
-    await turnRight(20)
-    await moveFront(3.25)
+    await moveFrontSlower(0.6)
 
 async def main():
-    await moveBack(0.1)
-    await mission15()
+    #await moveBack(0.05)
+    await mission15_1()
 
-runloop.run(main())
+runloop.run(main()) 

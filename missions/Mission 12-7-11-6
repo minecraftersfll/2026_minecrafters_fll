@@ -24,6 +24,10 @@ async def turnRight(degree):
 async def moveFrontAttachment(rotations):
     await motor.run_for_degrees(port.D, int(rotations*360), 1050, acceleration=10000)
 
+
+async def moveFrontAttachmentSlow(rotations):
+    await motor.run_for_degrees(port.D, int(rotations*360), 200, acceleration=200)
+
 async def moveBackAttachment(rotations):
     await motor.run_for_degrees(port.C, int(rotations*360), 1050)
 
@@ -82,7 +86,7 @@ async def mission12_2():
 
 
 async def mission7_1():
-    await moveFront(2.6)
+    await moveFrontFAST(2.6)
     await turnRight(30)
     await moveFront(0.2)
     await turnLeft(30)
@@ -92,15 +96,29 @@ async def mission7_1():
 async def mission11():
     await moveBack(0.9)
     await moveFrontAttachment(0.4)
-    await turnLeft(125)
+    await turnLeft(130)
     await moveBack(0.3)
     await moveFront(0.75)
 
 async def mission6():
-    await moveFront(0.15)
     await turnLeft(90)
-    await moveBackSlow(0.32)
+    await moveBackSlow(0.4)
 
+async def mission15():
+    await moveFront(1)
+    await turnLeft(25)
+    
+    await moveFront(0.1)
+    await moveFrontAttachment(-0.4)
+    await turnRight(60)
+    await moveFrontAttachmentSlow(0.4)
+    await moveFrontAttachmentSlow(-0.6)
+    await turnLeft(30)
+    await moveFrontAttachment(0.6)
+    
+    await moveFront(0.9)
+    await turnRight(80)
+    await moveFrontFAST(3.5)
 
 async def main():
     await moveBack(0.05)
@@ -109,6 +127,7 @@ async def main():
     await mission11()
     #await moveFrontAttachment(-0.67)
     await mission6()
-
+    #await mission15()
+    
 
 runloop.run(main())

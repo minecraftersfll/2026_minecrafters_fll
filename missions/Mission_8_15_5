@@ -88,13 +88,13 @@ async def mission5_1():
 async def mission5_2():
     await moveFront(1.8)
     await turnRight(90)
-    await moveFrontAttachment(-0.7)
-    await moveFront(0.4)
+    await moveFrontAttachment(-0.85)
+    await moveFront(0.45)
     await moveFrontAttachment(0.3)
-    await moveFrontAttachment(-0.3)
     await moveBack(0.2)
+    await moveFrontAttachment(-0.3)
     await moveFront(0.25)
-    await moveFrontAttachment(0.7)
+    await moveFrontAttachment(0.8)
     await moveFrontAttachment(-0.8)
 
 async def mission8():
@@ -123,6 +123,15 @@ async def mission8_1():
     await moveBack(0.3)
     await moveFrontAttachment(0.3)
 
+async def mission9_1():
+    await moveFront(1.6)
+    await turnRight(90)
+    await moveFrontAttachment(-0.4)
+    await turnRight(45)
+    await moveFront(0.5)
+    await moveFrontAttachment(0.4)
+    await turnLeft(45)
+
     '''await moveFrontAttachment(-0.3)
     await moveback(0.3)'''
 
@@ -144,8 +153,11 @@ async def main():
     #await mission15()
     await mission8_1()
     await mission15_1()
-    await mission5_2()
+    #await mission5_2()
+    await moveFront(1.8)
+    await turnRight(90)
     await moveBackFast(2.5)
+    await turnLeftFast(45)
 
 runloop.run(main())
 '''Use black lego for the jig'''

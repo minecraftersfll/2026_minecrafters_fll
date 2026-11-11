@@ -64,7 +64,7 @@ async def moveFrontFAST(rotations):
 
 async def mission2():
     await moveFront(0.4)
-    await turnRight(63)
+    await turnRight(68)
     await moveFront(1.1)
     await moveFrontAttachment(0.35)
     await moveBack(0.8)
@@ -85,7 +85,7 @@ async def mission3_1():
 
 
 async def main():
-    await moveBack(0.1) 
+    await moveBack(0.1)
     await mission2()
     await mission3_1()
     #await turnLeftFast(200)

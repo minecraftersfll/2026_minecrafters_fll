@@ -1,4 +1,3 @@
-
 from hub import port
 import runloop
 import motor
@@ -68,7 +67,7 @@ async def moveFrontFAST(rotations):
 
 'working mission code'
 async def mission12_1():
-    await turnRight(110)
+    await turnRight(120)
     await moveFrontAttachment(-0.8)
     await moveFront(0.2)
     await moveFrontAttachment(0.3)
@@ -86,17 +85,17 @@ async def mission12_2():
 
 
 async def mission7_1():
-    await moveFrontFAST(2.6)
+    await moveFront(2.6)
     await turnRight(30)
     await moveFront(0.2)
     await turnLeft(30)
-    await moveBack(0.3)
+    await moveBack(0.2)
     await moveFront(0.1)
 
 async def mission11():
     await moveBack(0.9)
     await moveFrontAttachment(0.4)
-    await turnLeft(130)
+    await turnLeft(125)
     await moveBack(0.3)
     await moveFront(0.75)
 
@@ -107,7 +106,7 @@ async def mission6():
 async def mission15():
     await moveFront(1)
     await turnLeft(25)
-    
+
     await moveFront(0.1)
     await moveFrontAttachment(-0.4)
     await turnRight(60)
@@ -115,7 +114,7 @@ async def mission15():
     await moveFrontAttachmentSlow(-0.6)
     await turnLeft(30)
     await moveFrontAttachment(0.6)
-    
+
     await moveFront(0.9)
     await turnRight(80)
     await moveFrontFAST(3.5)
@@ -128,6 +127,6 @@ async def main():
     #await moveFrontAttachment(-0.67)
     await mission6()
     #await mission15()
-    
+
 
 runloop.run(main())

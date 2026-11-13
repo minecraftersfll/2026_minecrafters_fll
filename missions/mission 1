@@ -72,15 +72,15 @@ async def mission_1():
     await turnLeftSlow(100)
     await turnRight(200)
     await moveFront(-2.65)
-    
 
 
-   
-    
+
+
+
 async def main():
     await moveBack(0.1)
     await mission_1()
-    
+
 
 
 
